@@ -1,11 +1,14 @@
 package whz.pti.farm_controll.repositories;
 
-import whz.pti.farm_controll.entity.User;
+import org.springframework.stereotype.Repository;
+import whz.pti.farm_controll.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
+import java.util.Set;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByEmail(String email);
+@Repository
+public interface UserRepository extends JpaRepository<Users, Long> {
+    Optional<Users> findByEmail(String email);
 
 }

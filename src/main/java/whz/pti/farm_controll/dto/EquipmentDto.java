@@ -6,21 +6,32 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import whz.pti.farm_controll.enums.EquipmentStatus;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class EquipmentDto {
 
-    Long id;
-    String equipmentName;
-    String model;
-    String manufacturer;
-    LocalDateTime installationDate;
-    Long statusId;
-    Long techPassportImageId;
+    private Long id;
+    private String equipmentName;
+    private String model;
+    private String manufacturer;
+    private LocalDateTime installationDate;
+    private EquipmentStatus equipmentStatus;
+    private String equipmentStatusName;
+    private Set<Long> taskId = new HashSet<>();
+    private List<String> taskNames = new ArrayList<>();
+    private Long locationId;
+    private String locationName;
+    private Set<Long> sparePartIds = new HashSet<>();
+    private List<String> sparePartNames = new ArrayList<>();
+
 }

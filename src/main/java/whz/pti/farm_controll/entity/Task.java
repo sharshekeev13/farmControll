@@ -4,8 +4,11 @@ package whz.pti.farm_controll.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import whz.pti.farm_controll.enums.TaskStatus;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,10 +30,23 @@ public class Task {
     @Column(name="end_time")
     LocalDateTime endTime;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn
-    TaskStatus taskStatus;
-    @OneToOne
-    User user;
+    @Enumerated(EnumType.STRING)
+    private TaskStatus taskStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users users;
+
+    @ManyToMany
+    @JoinTable(
+            name = "task_equipment",
+            joinColumns = @JoinColumn(name = "task_id"),
+            inverseJoinColumns = @JoinColumn(name = "equipment_id")
+    )
+    private Set<Equipment> equipments = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
 
 }

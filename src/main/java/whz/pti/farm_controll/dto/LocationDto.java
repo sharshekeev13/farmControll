@@ -1,20 +1,14 @@
 package whz.pti.farm_controll.dto;
 
-
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldDefaults;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class SparePartDto {
+public class LocationDto {
     private Long id;
-
     private String name;
-
-    private Long quantity;
+    private String description;
 }

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Aufgabenliste</title>
+</head>
+<body>
+<h2>Aufgaben</h2>
+
+<a th:href="@{/tasks/new}">Neue Aufgabe hinzufügen</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>Titel</th>
+        <th>Status</th>
+        <th>Benutzer</th>
+        <th>Standort</th>
+        <th>Aktionen</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="t : ${tasks}">
+        <td th:text="${t.name}"></td>
+        <td th:text="${t.taskStatusName}"></td>
+        <td th:text="${t.userName}"></td>
+        <td th:text="${t.locationName}"></td>
+        <td>
+            <a th:href="@{'/tasks/edit/' + ${t.id}}">Bearbeiten</a> |
+            <a th:href="@{'/tasks/delete/' + ${t.id}}" onclick="return confirm('Aufgabe wirklich löschen?')">Löschen</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
