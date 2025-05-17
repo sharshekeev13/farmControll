@@ -4,33 +4,49 @@ package whz.pti.farm_controll.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import whz.pti.farm_controll.enums.EquipmentStatus;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name="equipment")
 public class Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column(name="equipment_name")
-    String equipmentName;
+    private String equipmentName;
 
     @Column(name="model")
-    String model;
+    private String model;
 
     @Column(name="manufacturer")
-    String manufacturer;
+    private String manufacturer;
 
     @Column(name="installationDate")
-    LocalDateTime installationDate;
+    private LocalDateTime installationDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn
-    EquipmentStatus status;
+    @Enumerated(EnumType.STRING)
+    private EquipmentStatus equipmentStatus;
 
+    @ManyToMany(mappedBy = "equipments")
+    private Set<Task> tasks = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "equipment_spare_parts",
+            joinColumns = @JoinColumn(name = "equipment_id"),
+            inverseJoinColumns = @JoinColumn(name = "spare_part_id")
+    )
+    private Set<SparePart> spareParts = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
 
 }

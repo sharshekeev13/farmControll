@@ -9,8 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,7 +18,7 @@ import java.util.List;
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "users")
-public class User implements UserDetails {
+public class Users implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -32,9 +31,8 @@ public class User implements UserDetails {
     @Column(name="firstName")
     String firstName;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    Task task;
+    @OneToMany(mappedBy = "users")
+    private List<Task> tasks = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Role role;

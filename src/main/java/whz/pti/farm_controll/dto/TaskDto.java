@@ -6,19 +6,28 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import whz.pti.farm_controll.enums.TaskStatus;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class TaskDto {
-    Long id;
-    String name;
-    String description;
-    LocalDateTime startTime;
-    LocalDateTime endTime;
-    Long taskStatusId;
-    Long userId;
+    private Long id;
+    private String name;
+    private String description;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private TaskStatus taskStatus;
+    private String taskStatusName;
+    private Long userId;
+    private String userName;
+    private Long locationId;
+    private String locationName;
+    private Set<Long> equipmentIds = new HashSet<>();
 }

@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -21,5 +24,10 @@ public class SparePart {
     private String name;
 
     private Long quantity;
+
+    @ManyToMany(mappedBy = "spareParts")
+    private Set<Equipment> equipments = new HashSet<>();
+
+
 
 }
