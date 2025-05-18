@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Standorte</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Standorte</h2>
+        <a th:href="@{/locations/new}" class="btn btn-primary">+ Neuer Standort</a>
+    </div>
+
+    <table class="table table-hover table-bordered bg-white">
+        <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Beschreibung</th>
+            <th>Adresse</th>
+            <th>Koordinaten</th>
+            <th>Aktionen</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="location : ${locations}">
+            <td th:text="${location.id}"></td>
+            <td class="fw-bold" th:text="${location.name}"></td>
+            <td th:text="${location.description}"></td>
+            <td th:text="${location.address}"></td>
+            <td th:text="${location.coordinates}"></td>
+            <td>
+                <a th:href="@{'/locations/update/' + ${location.id}}" class="btn btn-sm btn-outline-secondary">Bearbeiten</a>
+                <a th:href="@{'/locations/delete/' + ${location.id}}"
+                   onclick="return confirm('Möchten Sie diesen Standort wirklich löschen?')"
+                   class="btn btn-sm btn-outline-danger ms-2">Löschen</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

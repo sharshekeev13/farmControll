@@ -1,51 +1,98 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="UTF-8">
   <title>Aufgabe</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<h2 th:text="${task.id == null} ? 'Neue Aufgabe erstellen' : 'Aufgabe bearbeiten'"></h2>
+<body class="bg-light">
 
-<form th:action="@{${task.id} == null ? '/tasks/save' : '/tasks/update'}"
-      th:object="${task}" method="post">
+<div class="container mt-5">
+  <h4 class="mb-4" th:text="${task.id == null} ? 'Neue Aufgabe erstellen' : 'Aufgabe bearbeiten'"></h4>
 
-  <input type="hidden" th:field="*{id}"/>
+  <form th:action="@{${task.id} == null ? '/tasks/save' : '/tasks/update'}"
+        th:object="${task}" method="post">
 
-  <label>Titel:</label>
-  <input type="text" th:field="*{name}" required/><br/>
+    <input type="hidden" th:field="*{id}"/>
 
-  <label>Beschreibung:</label>
-  <textarea th:field="*{description}"></textarea><br/>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Beschreibung</h5>
 
-  <label>Startzeit:</label>
-  <input type="datetime-local" th:field="*{startTime}"/><br/>
+            <div class="mb-3">
+              <label class="form-label">Titel:</label>
+              <input type="text" class="form-control" th:field="*{name}" required/>
+            </div>
 
-  <label>Endzeit:</label>
-  <input type="datetime-local" th:field="*{endTime}"/><br/>
+            <div class="mb-3">
+              <label class="form-label">Beschreibung:</label>
+              <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
+            </div>
 
-  <label>Status:</label>
-  <select th:field="*{taskStatus}">
-    <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
-  </select><br/>
+            <div class="mb-3">
+              <label class="form-label">Startzeit:</label>
+              <input type="datetime-local" class="form-control" th:field="*{startTime}"/>
+            </div>
 
-  <label>Benutzer:</label>
-  <select th:field="*{userId}">
-    <option th:each="u : ${users}" th:value="${u.id}" th:text="${u.username}"></option>
-  </select><br/>
+            <div class="mb-3">
+              <label class="form-label">Endzeit:</label>
+              <input type="datetime-local" class="form-control" th:field="*{endTime}"/>
+            </div>
 
-  <label>Standort:</label>
-  <select th:field="*{locationId}">
-    <option th:each="l : ${locations}" th:value="${l.id}" th:text="${l.name}"></option>
-  </select><br/>
+            <div class="mb-3">
+              <label class="form-label">Status:</label>
+              <select class="form-select" th:field="*{taskStatus}">
+                <option th:each="status : ${statuses}"
+                        th:value="${status.name()}"
+                        th:text="${status.name()}"></option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <label>Geräte:</label>
-  <select multiple th:field="*{equipmentIds}">
-    <option th:each="e : ${equipments}" th:value="${e.id}" th:text="${e.equipmentName}"></option>
-  </select><br/>
+      <div class="col-md-4">
+        <div class="card mb-3 shadow-sm">
+          <div class="card-body">
+            <h6 class="card-title">Geräte</h6>
+            <select multiple class="form-select" th:field="*{equipmentIds}">
+              <option th:each="e : ${equipments}" th:value="${e.id}" th:text="${e.equipmentName}"></option>
+            </select>
+          </div>
+        </div>
 
-  <button type="submit">Speichern</button>
-</form>
+        <div class="card mb-3 shadow-sm">
+          <div class="card-body">
+            <h6 class="card-title">Benutzer</h6>
+            <select class="form-select" th:field="*{userId}">
+              <option th:each="u : ${users}" th:value="${u.id}" th:text="${u.username}"></option>
+            </select>
+          </div>
+        </div>
 
-<a th:href="@{/tasks}">Zurück zur Liste</a>
+        <div class="card mb-3 shadow-sm">
+          <div class="card-body">
+            <h6 class="card-title">Standort</h6>
+            <select class="form-select" th:field="*{locationId}">
+              <option th:each="l : ${locations}" th:value="${l.id}" th:text="${l.name}"></option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 d-flex justify-content-between align-items-center">
+      <span class="text-muted">Speichern erforderlich</span>
+      <div>
+        <button type="submit" class="btn btn-success">Speichern</button>
+        <a th:href="@{/tasks}" class="btn btn-outline-danger ms-2">Abbrechen</a>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface EquipmentService {
     void saveEquipment(EquipmentDto equipmentDto);
-    EquipmentDto updateEquipment(EquipmentDto equipmentDto);
+    void updateEquipment(EquipmentDto equipmentDto);
     List<EquipmentDto> findAllEquipment();
     void deleteEquipment(Long id);
     EquipmentDto getEquipmentById(Long id);

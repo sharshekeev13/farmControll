@@ -5,8 +5,8 @@ import whz.pti.farm_controll.dto.TaskDto;
 import java.util.List;
 
 public interface TaskService {
-    TaskDto saveTask(TaskDto taskDto);
-    TaskDto updateTask(TaskDto taskDto);
+    void saveTask(TaskDto taskDto);
+    void updateTask(TaskDto taskDto);
     List<TaskDto> findAllTask();
     void deleteTask(Long id);
 }

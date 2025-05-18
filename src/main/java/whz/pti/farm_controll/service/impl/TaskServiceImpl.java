@@ -2,6 +2,7 @@ package whz.pti.farm_controll.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import whz.pti.farm_controll.dto.TaskDto;
 import whz.pti.farm_controll.entity.Equipment;
 import whz.pti.farm_controll.entity.Location;
@@ -13,7 +14,7 @@ import whz.pti.farm_controll.repositories.TaskRepository;
 import whz.pti.farm_controll.repositories.UserRepository;
 import whz.pti.farm_controll.service.TaskService;
 
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
@@ -74,7 +76,7 @@ public class TaskServiceImpl implements TaskService {
             dto.setLocationName(task.getLocation().getName());
         }
         if (task.getEquipments() != null && !task.getEquipments().isEmpty()) {
-            Set<Long> equipmentIds = task.getEquipments().stream()
+            Set<Long> equipmentIds = new HashSet<>(task.getEquipments()).stream()
                     .map(Equipment::getId)
                     .collect(Collectors.toSet());
             dto.setEquipmentIds(equipmentIds);
@@ -84,20 +86,21 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDto saveTask(TaskDto dto) {
+    public void saveTask(TaskDto dto) {
         Task task = mapToEntity(dto);
         Task saved = taskRepository.save(task);
-        return mapToDto(saved);
+        mapToDto(saved);
     }
 
     @Override
-    public TaskDto updateTask(TaskDto dto) {
+    public void updateTask(TaskDto dto) {
         Task task = mapToEntity(dto);
         Task saved = taskRepository.save(task);
-        return mapToDto(saved);
+        mapToDto(saved);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<TaskDto> findAllTask() {
         return taskRepository.findAll().stream()
                 .map(this::mapToDto)
@@ -108,6 +111,5 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
     }
-
 
 }

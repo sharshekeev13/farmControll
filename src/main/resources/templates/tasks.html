@@ -1,35 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Aufgabenliste</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<h2>Aufgaben</h2>
+<body class="bg-light">
 
-<a th:href="@{/tasks/new}">Neue Aufgabe hinzufügen</a>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Aufgaben</h2>
+        <a th:href="@{/tasks/new}" class="btn btn-primary">+ Aufgabe</a>
+    </div>
 
-<table>
-    <thead>
-    <tr>
-        <th>Titel</th>
-        <th>Status</th>
-        <th>Benutzer</th>
-        <th>Standort</th>
-        <th>Aktionen</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="t : ${tasks}">
-        <td th:text="${t.name}"></td>
-        <td th:text="${t.taskStatusName}"></td>
-        <td th:text="${t.userName}"></td>
-        <td th:text="${t.locationName}"></td>
-        <td>
-            <a th:href="@{'/tasks/edit/' + ${t.id}}">Bearbeiten</a> |
-            <a th:href="@{'/tasks/delete/' + ${t.id}}" onclick="return confirm('Aufgabe wirklich löschen?')">Löschen</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <table class="table table-hover table-bordered bg-white">
+        <thead class="table-light">
+        <tr>
+            <th>Titel</th>
+            <th>Status</th>
+            <th>Benutzer</th>
+            <th>Standort</th>
+            <th>Aktionen</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="t : ${tasks}">
+            <td th:text="${t.name}" class="fw-bold"></td>
+            <td>
+                <span class="badge bg-info text-dark" th:text="${t.taskStatusName}"></span>
+            </td>
+            <td th:text="${t.userName}"></td>
+            <td th:text="${t.locationName}"></td>
+            <td>
+                <a th:href="@{'/tasks/update/' + ${t.id}}" class="btn btn-sm btn-outline-secondary">Bearbeiten</a>
+                <a th:href="@{'/tasks/delete/' + ${t.id}}"
+                   onclick="return confirm('Aufgabe wirklich löschen?')"
+                   class="btn btn-sm btn-outline-danger ms-2">Löschen</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

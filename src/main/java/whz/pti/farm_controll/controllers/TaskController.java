@@ -24,7 +24,7 @@ public class TaskController {
     @GetMapping
     public String listTasks(Model model) {
         model.addAttribute("tasks", taskService.findAllTask());
-        return "tasks"; // task/list.html
+        return "tasks";
     }
 
     @GetMapping("/new")
@@ -34,7 +34,7 @@ public class TaskController {
         model.addAttribute("users", userRepository.findAll());
         model.addAttribute("locations", locationRepository.findAll());
         model.addAttribute("statuses", TaskStatus.values());
-        return "create-task"; // task/form.html
+        return "create-task";
     }
 
     @PostMapping("/save")
@@ -43,12 +43,12 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/update/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         TaskDto dto = taskService.findAllTask().stream()
                 .filter(t -> t.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Задача не найдена"));
+                .orElseThrow(() -> new RuntimeException("Task not found"));
 
         model.addAttribute("task", dto);
         model.addAttribute("equipments", equipmentRepository.findAll());

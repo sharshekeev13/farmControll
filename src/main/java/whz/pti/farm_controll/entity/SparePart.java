@@ -21,13 +21,13 @@ public class SparePart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="name")
     private String name;
 
+    @Column(name="quantity")
     private Long quantity;
 
     @ManyToMany(mappedBy = "spareParts")
     private Set<Equipment> equipments = new HashSet<>();
-
-
 
 }

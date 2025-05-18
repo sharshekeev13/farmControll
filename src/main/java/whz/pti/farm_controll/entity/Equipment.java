@@ -31,6 +31,7 @@ public class Equipment {
     @Column(name="installationDate")
     private LocalDateTime installationDate;
 
+    @Column(name="equipment_status")
     @Enumerated(EnumType.STRING)
     private EquipmentStatus equipmentStatus;
 
