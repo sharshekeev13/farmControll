@@ -30,6 +30,7 @@ public class Task {
     @Column(name="end_time")
     LocalDateTime endTime;
 
+    @Column(name="task_status")
     @Enumerated(EnumType.STRING)
     private TaskStatus taskStatus;
 

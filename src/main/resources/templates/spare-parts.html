@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Ersatzteilliste</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Ersatzteile</h2>
+    <a th:href="@{/spare-parts/new}" class="btn btn-primary">+ Neues Ersatzteil</a>
+  </div>
+
+  <table class="table table-hover table-bordered bg-white">
+    <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Menge</th>
+      <th>Verwendet in Geräten</th>
+      <th>Aktionen</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="sp : ${spareParts}">
+      <td th:text="${sp.id}"></td>
+      <td class="fw-bold" th:text="${sp.name}"></td>
+      <td th:text="${sp.quantity}"></td>
+      <td>
+        <ul class="mb-0 ps-3">
+          <li th:each="ename : ${sp.equipmentNames}" th:text="${ename}"></li>
+        </ul>
+      </td>
+      <td>
+        <a th:href="@{'/spare-parts/update/' + ${sp.id}}" class="btn btn-sm btn-outline-secondary">Bearbeiten</a>
+        <a th:href="@{'/spare-parts/delete/' + ${sp.id}}"
+           onclick="return confirm('Möchten Sie dieses Ersatzteil wirklich löschen?')"
+           class="btn btn-sm btn-outline-danger ms-2">Löschen</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

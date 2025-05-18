@@ -108,20 +108,22 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public void saveEquipment(EquipmentDto equipmentDto) {
+        System.out.println("equipmentStatus (DTO): " + equipmentDto.getEquipmentStatus());
         Equipment equipment = mapToEntity(equipmentDto);
         Equipment savedEquipment = equipmentRepository.save(equipment);
         mapToDto(savedEquipment);
     }
 
     @Override
-    public EquipmentDto updateEquipment(EquipmentDto equipmentDto) {
+    public void updateEquipment(EquipmentDto equipmentDto) {
         if (equipmentDto.getId() == null || !equipmentRepository.existsById(equipmentDto.getId())) {
             throw new EntityNotFoundException("Equipment with id " + equipmentDto.getId() + " not found");
         }
 
         Equipment equipment = mapToEntity(equipmentDto);
+
         Equipment updatedEquipment = equipmentRepository.save(equipment);
-        return mapToDto(updatedEquipment);
+        mapToDto(updatedEquipment);
     }
 
     @Override
