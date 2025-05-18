@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <title>FarmControll Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
 </head>
 <body>
+<div class="dashboard-container">
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
+    <div class="dashboard-content-container">
+        <h2>Dashboard</h2>
+        <div class="dashboard-cards-container">
+            <div class="dashboard-cards-item dashboard-tasks-container">
+                <div class="dashboard-card-title">Weekly Sales</div>
+                <div class="dashboard-card-value">$ 15,0000</div>
+            </div>
+
+            <div class="dashboard-cards-item dashboard-equipment-container">
+                <div class="dashboard-card-title">Weekly Orders</div>
+                <div class="dashboard-card-value">45,6334</div>
+            </div>
+
+            <div class="dashboard-cards-item dashboard-platforms-container">
+                <div class="dashboard-card-title">Visitors Online</div>
+                <div class="dashboard-card-value">95,5741</div>
+            </div>
+        </div>
+        <div class="dashboard-diagram-container">
+
+        </div>
+    </div>
+</div>
 </body>
 </html>
