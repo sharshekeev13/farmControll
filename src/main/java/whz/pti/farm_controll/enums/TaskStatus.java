@@ -1,8 +1,8 @@
 package whz.pti.farm_controll.enums;
 
 public enum TaskStatus {
-    PLANNED,     // В планах
-    IN_PROGRESS, // В работе
-    COMPLETED,   // Завершено
-    POSTPONED    // отложен
+    GEPLANT,         // Geplant
+    IN_ARBEIT,       // In Bearbeitung
+    ABGESCHLOSSEN,   // Abgeschlossen
+    VERSCHOBEN       // Verschoben
 }

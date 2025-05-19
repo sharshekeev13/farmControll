@@ -8,16 +8,14 @@ import whz.pti.farm_controll.entity.Equipment;
 import whz.pti.farm_controll.entity.Location;
 import whz.pti.farm_controll.entity.Task;
 import whz.pti.farm_controll.entity.Users;
+import whz.pti.farm_controll.enums.EquipmentStatus;
 import whz.pti.farm_controll.repositories.EquipmentRepository;
 import whz.pti.farm_controll.repositories.LocationRepository;
 import whz.pti.farm_controll.repositories.TaskRepository;
 import whz.pti.farm_controll.repositories.UserRepository;
 import whz.pti.farm_controll.service.TaskService;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,7 +74,8 @@ public class TaskServiceImpl implements TaskService {
             dto.setLocationName(task.getLocation().getName());
         }
         if (task.getEquipments() != null && !task.getEquipments().isEmpty()) {
-            Set<Long> equipmentIds = new HashSet<>(task.getEquipments()).stream()
+            Set<Long> equipmentIds = task.getEquipments().stream()
+                    .filter(e -> e.getEquipmentStatus() != EquipmentStatus.STILLGELEGT) // фильтрация
                     .map(Equipment::getId)
                     .collect(Collectors.toSet());
             dto.setEquipmentIds(equipmentIds);
@@ -110,6 +109,14 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
+    }
+
+    @Override
+    public List<TaskDto> findAllTaskByEmail(String email) {
+        Optional<Users> user = userRepository.findByEmail(email);
+        return user.map(users -> taskRepository.findByUsers(users).stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList())).orElseGet(List::of);
     }
 
 }

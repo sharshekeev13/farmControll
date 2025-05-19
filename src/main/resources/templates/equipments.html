@@ -3,49 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Geräteliste</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/equipment.css}"/>
 </head>
-<body class="bg-light">
+<body>
 
-<div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Geräte</h2>
-        <a th:href="@{/equipments/new}" class="btn btn-primary">+ Neues Gerät</a>
+<div class="equipment-container">
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="equipment-content-container">
+        <div class="equipment-header">
+            <h2>Geräte</h2>
+            <a th:href="@{/equipments/new}">+ Neues Gerät</a>
+        </div>
+
+        <table class="equipment-table">
+            <thead >
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Modell</th>
+                <th>Hersteller</th>
+                <th>Status</th>
+                <th>Standort</th>
+                <th>Aktionen</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="e : ${equipments}">
+                <td th:text="${e.id}"></td>
+                <td th:text="${e.equipmentName}"></td>
+                <td th:text="${e.model}"></td>
+                <td th:text="${e.manufacturer}"></td>
+                <td>
+                    <span  th:text="${e.equipmentStatusName}"></span>
+                </td>
+                <td th:text="${e.locationName}"></td>
+                <td>
+                    <a class="btn-edit" th:href="@{'/equipments/update/' + ${e.id}}">Bearbeiten</a>
+                    <a class="btn-delete" th:href="@{'/equipments/delete/' + ${e.id}}"
+                       onclick="return confirm('Möchten Sie dieses Gerät wirklich löschen?')">Löschen</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-
-    <table class="table table-hover table-bordered bg-white">
-        <thead class="table-light">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Modell</th>
-            <th>Hersteller</th>
-            <th>Status</th>
-            <th>Standort</th>
-            <th>Aktionen</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="e : ${equipments}">
-            <td th:text="${e.id}"></td>
-            <td class="fw-bold" th:text="${e.equipmentName}"></td>
-            <td th:text="${e.model}"></td>
-            <td th:text="${e.manufacturer}"></td>
-            <td>
-                <span class="badge bg-info text-dark" th:text="${e.equipmentStatusName}"></span>
-            </td>
-            <td th:text="${e.locationName}"></td>
-            <td>
-                <a th:href="@{'/equipments/update/' + ${e.id}}" class="btn btn-sm btn-outline-secondary">Bearbeiten</a>
-                <a th:href="@{'/equipments/delete/' + ${e.id}}"
-                   onclick="return confirm('Möchten Sie dieses Gerät wirklich löschen?')"
-                   class="btn btn-sm btn-outline-danger ms-2">Löschen</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

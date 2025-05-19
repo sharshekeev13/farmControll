@@ -8,6 +8,7 @@
 <body class="bg-light">
 
 <div class="container mt-5">
+
     <h4 class="mb-4" th:text="${location.id == null} ? 'Neuen Standort erstellen' : 'Standort bearbeiten'"></h4>
 
     <form th:action="@{${location.id} == null ? '/locations/save' : '/locations/update'}"

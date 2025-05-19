@@ -3,47 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <title>Ersatzteilliste</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+  <link rel="stylesheet" th:href="@{/css/spar-parts.css}"/>
 </head>
 <body class="bg-light">
 
-<div class="container mt-5">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Ersatzteile</h2>
-    <a th:href="@{/spare-parts/new}" class="btn btn-primary">+ Neues Ersatzteil</a>
-  </div>
+<div class="spar-container">
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
-  <table class="table table-hover table-bordered bg-white">
-    <thead class="table-light">
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Menge</th>
-      <th>Verwendet in Geräten</th>
-      <th>Aktionen</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="sp : ${spareParts}">
-      <td th:text="${sp.id}"></td>
-      <td class="fw-bold" th:text="${sp.name}"></td>
-      <td th:text="${sp.quantity}"></td>
-      <td>
-        <ul class="mb-0 ps-3">
-          <li th:each="ename : ${sp.equipmentNames}" th:text="${ename}"></li>
-        </ul>
-      </td>
-      <td>
-        <a th:href="@{'/spare-parts/update/' + ${sp.id}}" class="btn btn-sm btn-outline-secondary">Bearbeiten</a>
-        <a th:href="@{'/spare-parts/delete/' + ${sp.id}}"
-           onclick="return confirm('Möchten Sie dieses Ersatzteil wirklich löschen?')"
-           class="btn btn-sm btn-outline-danger ms-2">Löschen</a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+  <div class="spar-content-container">
+    <div class="spar-header">
+      <h2>Ersatzteile</h2>
+      <a th:href="@{/spare-parts/new}">+ Neues Ersatzteil</a>
+    </div>
+
+    <table  class="spar-table">
+      <thead >
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Menge</th>
+        <th>Verwendet in Geräten</th>
+        <th>Aktionen</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="sp : ${spareParts}">
+        <td th:text="${sp.id}"></td>
+        <td th:text="${sp.name}"></td>
+        <td th:text="${sp.quantity}"></td>
+        <td>
+          <ul>
+            <li th:each="ename : ${sp.equipmentNames}" th:text="${ename}"></li>
+          </ul>
+        </td>
+        <td>
+          <a class="btn-edit" th:href="@{'/spare-parts/update/' + ${sp.id}}" >Bearbeiten</a>
+          <a class="btn-delete" th:href="@{'/spare-parts/delete/' + ${sp.id}}"
+             onclick="return confirm('Möchten Sie dieses Ersatzteil wirklich löschen?')"
+             >Löschen</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
