@@ -1,6 +1,7 @@
 package whz.pti.farm_controll.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,7 @@ public class EquipmentController {
     }
 
     @GetMapping("/new")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public String showCreateForm(Model model) {
         model.addAttribute("equipment", new EquipmentDto());
         model.addAttribute("locations", locationRepository.findAll());
@@ -38,12 +40,14 @@ public class EquipmentController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public String saveEquipment(@ModelAttribute("equipment") EquipmentDto dto) {
         equipmentService.saveEquipment(dto);
         return "redirect:/equipments";
     }
 
     @GetMapping("/update/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public String showEditForm(@PathVariable Long id, Model model) {
         EquipmentDto dto = equipmentService.getEquipmentById(id);
         model.addAttribute("equipment", dto);
@@ -55,6 +59,7 @@ public class EquipmentController {
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public String updateEquipment(@ModelAttribute("equipment") EquipmentDto dto) {
         equipmentService.updateEquipment(dto);
         return "redirect:/equipments";
@@ -62,6 +67,7 @@ public class EquipmentController {
 
 
     @GetMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteEquipment(@PathVariable Long id) {
         equipmentService.deleteEquipment(id);
         return "redirect:/equipments";

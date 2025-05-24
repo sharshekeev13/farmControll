@@ -30,4 +30,12 @@ public class SparePart {
     @ManyToMany(mappedBy = "spareParts")
     private Set<Equipment> equipments = new HashSet<>();
 
+
+    public SparePart(Long id, String name, Long quantity){
+        this.id = id;
+        this.name = name;
+        this.quantity = quantity;
+    }
+
+
 }

@@ -1,6 +1,8 @@
 package whz.pti.farm_controll.controllers;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,7 @@ import whz.pti.farm_controll.repositories.LocationRepository;
 import whz.pti.farm_controll.repositories.UserRepository;
 import whz.pti.farm_controll.service.TaskService;
 
+@Slf4j
 @Controller
 @RequestMapping("/tasks")
 @RequiredArgsConstructor
@@ -28,6 +31,7 @@ public class TaskController {
     }
 
     @GetMapping("/new")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public String showCreateForm(Model model) {
         model.addAttribute("task", new TaskDto());
         model.addAttribute("equipments", equipmentRepository.findAll());
@@ -38,12 +42,14 @@ public class TaskController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public String saveTask(@ModelAttribute("task") TaskDto dto) {
         taskService.saveTask(dto);
         return "redirect:/tasks";
     }
 
     @GetMapping("/update/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public String showEditForm(@PathVariable Long id, Model model) {
         TaskDto dto = taskService.findAllTask().stream()
                 .filter(t -> t.getId().equals(id))
@@ -59,12 +65,14 @@ public class TaskController {
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public String updateTask(@ModelAttribute("task") TaskDto dto) {
         taskService.updateTask(dto);
         return "redirect:/tasks";
     }
 
     @GetMapping("/delete/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return "redirect:/tasks";

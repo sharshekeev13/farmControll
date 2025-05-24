@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="de">
 <head>
     <meta charset="UTF-8" />
     <title>FarmControll Dashboard</title>
@@ -7,16 +9,30 @@
 </head>
 <body>
 <div th:fragment="sidebar">
-    <nav class="container">
-        <h2>FarmControll</h2>
-        <ul class="nav">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Aufgaben</a></li>
-            <li><a href="#">Ausrüstung</a></li>
-            <li><a href="#">Plattformen</a></li>
-            <li><a href="#">Benutzer</a></li>
-        </ul>
-    </nav>
+    <div class="sidebar-wrapper">
+        <nav class="sidebar-container">
+            <h2>FarmControll</h2>
+            <ul class="sidebar-nav">
+                <li><a th:href="@{/}">Dashboard</a></li>
+                <li><a th:href="@{/tasks}">Aufgaben</a></li>
+                <li ><a th:href="@{/equipments}">Ausrüstung</a></li>
+                <li><a th:href="@{/locations}">Plattformen</a></li>
+                <li><a th:href="@{/spare-parts}">Ersatzteile</a></li>
+                <li sec:authorize="hasAnyAuthority('ADMIN')"><a th:href="@{/users}">Benutzer</a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-user-info-container">
+            <img th:src="@{/images/user.png}" class="sidebar-user-image">
+            <div class="sidebar-user-info">
+                <h3 sec:authentication="name">Benutzername</h3>
+                <span sec:authentication="principal.authorities">Role</span>
+            </div>
+            <a class="sidebar-logout-container" th:href="@{/login?logout}">
+                <img th:src="@{/images/logout.png}" alt="logout">
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

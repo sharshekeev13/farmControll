@@ -9,4 +9,5 @@ public interface TaskService {
     void updateTask(TaskDto taskDto);
     List<TaskDto> findAllTask();
     void deleteTask(Long id);
+    List<TaskDto> findAllTaskByEmail(String email);
 }

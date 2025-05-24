@@ -35,9 +35,11 @@ public class Equipment {
     @Enumerated(EnumType.STRING)
     private EquipmentStatus equipmentStatus;
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "equipments")
     private Set<Task> tasks = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany
     @JoinTable(
             name = "equipment_spare_parts",
@@ -46,6 +48,7 @@ public class Equipment {
     )
     private Set<SparePart> spareParts = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
     @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;

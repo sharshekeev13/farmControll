@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Benutzer</title>
+  <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+  <link rel="stylesheet" th:href="@{/css/users.css}">
+</head>
+<body>
+<div class="users-container">
+  <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+  <div class="users-content-container">
+    <div class="users-header">
+      <h2>Benutzer</h2>
+      <a th:href="@{/users/new}">+ User</a>
+    </div>
+
+    <table class="users-table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Aktionen</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="u : ${users}">
+        <td th:text="${u.getId()}"></td>
+        <td>
+          <span th:text="${u.getFullName()}"></span>
+        </td>
+        <td th:text="${u.getEmail()}"></td>
+        <td th:text="${u.getRole()}"></td>
+        <td>
+          <a class="btn-edit" th:href="@{'/users/update/' + ${u.getId()}}">Bearbeiten</a>
+          <a class="btn-delete" th:href="@{'/users/delete/' + ${u.getId()}}"
+             onclick="return confirm('Aufgabe wirklich löschen?')">Löschen</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

@@ -14,23 +14,40 @@
         <h2>Dashboard</h2>
         <div class="dashboard-cards-container">
             <div class="dashboard-cards-item dashboard-tasks-container">
-                <div class="dashboard-card-title">Weekly Sales</div>
-                <div class="dashboard-card-value">$ 15,0000</div>
+                <div class="dashboard-card-title">Aufgaben</div>
+                <div class="dashboard-card-value" th:text="${tasks}">$ 15,0000</div>
             </div>
 
             <div class="dashboard-cards-item dashboard-equipment-container">
-                <div class="dashboard-card-title">Weekly Orders</div>
-                <div class="dashboard-card-value">45,6334</div>
+                <div class="dashboard-card-title">Meine Aufgaben</div>
+                <div class="dashboard-card-value" th:text="${myTasks}">45,6334</div>
             </div>
 
             <div class="dashboard-cards-item dashboard-platforms-container">
-                <div class="dashboard-card-title">Visitors Online</div>
-                <div class="dashboard-card-value">95,5741</div>
+                <div class="dashboard-card-title">Ersatzteilliste</div>
+                <div class="dashboard-card-value" th:text="${spareParts}">95,5741</div>
             </div>
         </div>
-        <div class="dashboard-diagram-container">
-
+        <div class="faq-card">
+            <h3>Häufig gestellte Fragen (FAQ)</h3>
+            <div class="faq-item">
+                <span class="question">🔧 Wie füge ich eine neue Aufgabe hinzu?</span>
+                <span class="answer">Klicke im Menü auf „Aufgaben“ und dann auf „+ Aufgabe“.</span>
+            </div>
+            <div class="faq-item">
+                <span class="question">👤 Wie sehe ich meine Aufgaben?</span>
+                <span class="answer">Im Dashboard unter „Meine Aufgaben“ oder im Menü unter „Aufgaben“.</span>
+            </div>
+            <div class="faq-item">
+                <span class="question">📦 Wie verwalte ich Ersatzteile?</span>
+                <span class="answer">Gehe zu „Ersatzteile“ im Menü, dort kannst du neue Teile hinzufügen oder Bestände bearbeiten.</span>
+            </div>
+            <div class="faq-item">
+                <span class="question">📍 Wie wird ein Standort zugewiesen?</span>
+                <span class="answer">Beim Anlegen von Geräten oder Aufgaben wird ein Standort ausgewählt.</span>
+            </div>
         </div>
+
     </div>
 </div>
 </body>
