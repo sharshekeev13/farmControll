@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Standorte</title>
@@ -14,7 +15,9 @@
     <div class="location-content-container">
         <div class="location-header">
             <h2>Standorte</h2>
-            <a th:href="@{/locations/new}">+ Neuer Standort</a>
+                <span sec:authorize="hasAnyAuthority('ADMIN','MANAGER')">
+                    <a th:href="@{/locations/new}">+ Neuer Standort</a>
+                </span>
         </div>
 
         <table class="location-table">
@@ -25,7 +28,7 @@
                 <th>Beschreibung</th>
                 <th>Adresse</th>
                 <th>Koordinaten</th>
-                <th>Aktionen</th>
+                <th sec:authorize="hasAnyAuthority('ADMIN','MANAGER')">Aktionen</th>
             </tr>
             </thead>
             <tbody>
@@ -36,10 +39,12 @@
                 <td th:text="${location.address}"></td>
                 <td th:text="${location.coordinates}"></td>
                 <td>
-                    <a class="btn-edit" th:href="@{'/locations/update/' + ${location.id}}">Bearbeiten</a>
-                    <a class="btn-delete" th:href="@{'/locations/delete/' + ${location.id}}"
-                       onclick="return confirm('Möchten Sie diesen Standort wirklich löschen?')"
-                    >Löschen</a>
+                    <span sec:authorize="hasAnyAuthority('ADMIN','MANAGER')">
+                        <a class="btn-edit" th:href="@{'/locations/update/' + ${location.id}}">Bearbeiten</a>
+                        <a class="btn-delete" th:href="@{'/locations/delete/' + ${location.id}}"
+                           onclick="return confirm('Möchten Sie diesen Standort wirklich löschen?')"
+                        >Löschen</a>
+                    </span>
                 </td>
             </tr>
             </tbody>

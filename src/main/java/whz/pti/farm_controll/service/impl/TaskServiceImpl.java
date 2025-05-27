@@ -119,4 +119,32 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList())).orElseGet(List::of);
     }
 
+    @Transactional(readOnly = true)
+    public List<TaskDto> findPlannedTasks() {
+        return taskRepository.findPlannedTasks().stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<TaskDto> findInProgressTasks() {
+        return taskRepository.findInProgressTasks().stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<TaskDto> findCompletedTasks() {
+        return taskRepository.findCompletedTasks().stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<TaskDto> findPostponedTasks() {
+        return taskRepository.findPostponedTasks().stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
 }

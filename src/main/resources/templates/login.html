@@ -20,8 +20,8 @@
                 <input autocomplete="off" type="password" name="password"/><br/>
             </div>
             <div class="error-container">
-                <div th:if="${param.error}">Неверный логин или пароль</div>
-                <div th:if="${param.logout}">Вы вышли из системы</div>
+                <div th:if="${param.error}">Ungültiges Login oder Passwort</div>
+                <div th:if="${param.logout}">Sie haben sich abgemeldet</div>
             </div>
             <button type="submit">Login</button>
         </form>

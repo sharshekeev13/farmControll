@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Geräteliste</title>
@@ -13,7 +14,39 @@
     <div class="equipment-content-container">
         <div class="equipment-header">
             <h2>Geräte</h2>
-            <a th:href="@{/equipments/new}">+ Neues Gerät</a>
+            <div class="equipments-filters">
+                <select
+                        class="filter-select"
+                        th:onchange="|window.location.href=''+this.value|">
+                    <option th:value="@{/equipments}"
+                            th:selected="${filter == 'all'}">
+                        Alle
+                    </option>
+                    <option th:value="@{/equipments/betriebsbereit}"
+                            th:selected="${filter == 'betriebsbereit'}">
+                        Betriebsbereit
+                    </option>
+                    <option th:value="@{/equipments/funktion}"
+                            th:selected="${filter == 'funktion'}">
+                        Funktionsfähig
+                    </option>
+                    <option th:value="@{/equipments/in-wartung}"
+                            th:selected="${filter == 'in-wartung'}">
+                        In Wartung
+                    </option>
+                    <option th:value="@{/equipments/aussser-betriebsbereit}"
+                            th:selected="${filter == 'aussser-betriebsbereit'}">
+                        Außer Betrieb
+                    </option>
+                    <option th:value="@{/equipments/stillgelegt}"
+                            th:selected="${filter == 'stillgelegt'}">
+                        Stillgelegt
+                    </option>
+                </select>
+            </div>
+                <span sec:authorize="hasAnyAuthority('ADMIN','MANAGER')">
+                    <a th:href="@{/equipments/new}">+ Neues Gerät</a>
+                </span>
         </div>
 
         <table class="equipment-table">
@@ -25,7 +58,7 @@
                 <th>Hersteller</th>
                 <th>Status</th>
                 <th>Standort</th>
-                <th>Aktionen</th>
+                <th sec:authorize="hasAnyAuthority('ADMIN','MANAGER')">Aktionen</th>
             </tr>
             </thead>
             <tbody>
@@ -39,9 +72,17 @@
                 </td>
                 <td th:text="${e.locationName}"></td>
                 <td>
-                    <a class="btn-edit" th:href="@{'/equipments/update/' + ${e.id}}">Bearbeiten</a>
-                    <a class="btn-delete" th:href="@{'/equipments/delete/' + ${e.id}}"
-                       onclick="return confirm('Möchten Sie dieses Gerät wirklich löschen?')">Löschen</a>
+                      <span sec:authorize="hasAnyAuthority('ADMIN','MANAGER')">
+                        <a class="btn-edit"
+                           th:href="@{'/equipments/update/' + ${e.id}}">
+                          Bearbeiten
+                        </a>
+                        <a class="btn-delete"
+                           th:href="@{'/equipments/delete/' + ${e.id}}"
+                           onclick="return confirm('Möchten Sie dieses Gerät wirklich löschen?')">
+                          Löschen
+                        </a>
+                      </span>
                 </td>
             </tr>
             </tbody>

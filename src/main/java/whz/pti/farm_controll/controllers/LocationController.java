@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import whz.pti.farm_controll.dto.LocationDto;
+import whz.pti.farm_controll.repositories.LocationRepository;
 import whz.pti.farm_controll.service.LocationService;
 
 @Controller
@@ -13,9 +14,11 @@ import whz.pti.farm_controll.service.LocationService;
 @RequiredArgsConstructor
 public class LocationController {
         private final LocationService locationService;
+        private final LocationRepository locationRepository;
 
         @GetMapping
         public String listLocations(Model model) {
+            model.addAttribute("locationsStatus", locationRepository.countEquipmentsByLocation());
             model.addAttribute("locations", locationService.findAllLocations());
             return "locations";
         }

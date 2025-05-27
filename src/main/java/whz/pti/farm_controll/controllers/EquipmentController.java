@@ -25,6 +25,7 @@ public class EquipmentController {
     @GetMapping
     public String listEquipments(Model model) {
         model.addAttribute("equipments", equipmentService.findAllEquipment());
+        model.addAttribute("filter", "all");
         return "equipments";
     }
 
@@ -71,5 +72,40 @@ public class EquipmentController {
     public String deleteEquipment(@PathVariable Long id) {
         equipmentService.deleteEquipment(id);
         return "redirect:/equipments";
+    }
+
+    @GetMapping("/betriebsbereit")
+    public String listBetriebsbereit(Model model) {
+        model.addAttribute("equipments", equipmentService.findBetriebsbereitEquipment());
+        model.addAttribute("filter", "betriebsbereit");
+        return "equipments";
+    }
+
+    @GetMapping("/funktion")
+    public String listFunktion(Model model) {
+        model.addAttribute("equipments", equipmentService.findFunktionEquipment());
+        model.addAttribute("filter", "funktion");
+        return "equipments";
+    }
+
+    @GetMapping("/in-wartung")
+    public String listInWartung(Model model) {
+        model.addAttribute("equipments", equipmentService.findInWartungEquipment());
+        model.addAttribute("filter", "in-wartung");
+        return "equipments";
+    }
+
+    @GetMapping("/aussser-betriebsbereit")
+    public String listAusserBetriebsbereit(Model model) {
+        model.addAttribute("equipments", equipmentService.findAusserBetriebsbereitEquipment());
+        model.addAttribute("filter", "aussser-betriebsbereit");
+        return "equipments";
+    }
+
+    @GetMapping("/stillgelegt")
+    public String listStillgelegt(Model model) {
+        model.addAttribute("equipments", equipmentService.findStilllegTEquipment());
+        model.addAttribute("filter", "stillgelegt");
+        return "equipments";
     }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Aufgabenliste</title>
@@ -12,7 +13,35 @@
     <div class="tasks-content-container">
         <div class="tasks-header">
             <h2>Aufgaben</h2>
-            <a th:href="@{/tasks/new}">+ Aufgabe</a>
+            <div class="tasks-filters">
+                <select
+                        class="filter-select"
+                        th:onchange="|window.location.href=''+this.value|">
+                    <option th:value="@{/tasks}"
+                            th:selected="${filter == 'all'}">
+                        Alle
+                    </option>
+                    <option th:value="@{/tasks/geplant}"
+                            th:selected="${filter == 'geplant'}">
+                        Geplant
+                    </option>
+                    <option th:value="@{/tasks/in-arbeit}"
+                            th:selected="${filter == 'in-arbeit'}">
+                        In Arbeit
+                    </option>
+                    <option th:value="@{/tasks/abgeschlossen}"
+                            th:selected="${filter == 'abgeschlossen'}">
+                        Abgeschlossen
+                    </option>
+                    <option th:value="@{/tasks/verschoben}"
+                            th:selected="${filter == 'verschoben'}">
+                        Verschoben
+                    </option>
+                </select>
+            </div>
+            <span sec:authorize="hasAnyAuthority('ADMIN','MANAGER')">
+                <a th:href="@{/tasks/new}">+ Aufgabe</a>
+            </span>
         </div>
 
         <table class="tasks-table">
@@ -22,7 +51,9 @@
                 <th>Status</th>
                 <th>Benutzer</th>
                 <th>Standort</th>
-                <th>Aktionen</th>
+                <th>Beginn</th>
+                <th>Ende</th>
+                <th sec:authorize="hasAnyAuthority('ADMIN','MANAGER')">Aktionen</th>
             </tr>
             </thead>
             <tbody>
@@ -33,10 +64,14 @@
                 </td>
                 <td th:text="${t.userName}"></td>
                 <td th:text="${t.locationName}"></td>
+                <td th:text="${#temporals.format(t.startTime, 'dd.MM.yyyy HH:mm')}"></td>
+                <td th:text="${#temporals.format(t.endTime,   'dd.MM.yyyy HH:mm')}"></td>
                 <td>
-                    <a class="btn-edit" th:href="@{'/tasks/update/' + ${t.id}}">Bearbeiten</a>
-                    <a class="btn-delete" th:href="@{'/tasks/delete/' + ${t.id}}"
-                       onclick="return confirm('Aufgabe wirklich löschen?')">Löschen</a>
+                    <span sec:authorize="hasAnyAuthority('ADMIN','MANAGER')">
+                        <a class="btn-edit" th:href="@{'/tasks/update/' + ${t.id}}">Bearbeiten</a>
+                        <a class="btn-delete" th:href="@{'/tasks/delete/' + ${t.id}}"
+                           onclick="return confirm('Aufgabe wirklich löschen?')">Löschen</a>
+                    </span>
                 </td>
             </tr>
             </tbody>
