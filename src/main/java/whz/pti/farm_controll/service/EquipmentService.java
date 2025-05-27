@@ -10,4 +10,9 @@ public interface EquipmentService {
     List<EquipmentDto> findAllEquipment();
     void deleteEquipment(Long id);
     EquipmentDto getEquipmentById(Long id);
+    List<EquipmentDto> findBetriebsbereitEquipment();
+    List<EquipmentDto> findFunktionEquipment();
+    List<EquipmentDto> findInWartungEquipment();
+    List<EquipmentDto> findAusserBetriebsbereitEquipment();
+    List<EquipmentDto> findStilllegTEquipment();
 }

@@ -16,6 +16,7 @@ public class LocationDto {
     private String description;
     private String address;
     private String coordinates;
+    private Long equipmentCount;
 
     private List<Long> equipmentIds = new ArrayList<>();
     private List<String> equipmentNames = new ArrayList<>();

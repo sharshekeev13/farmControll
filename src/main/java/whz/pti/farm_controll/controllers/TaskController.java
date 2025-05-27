@@ -10,6 +10,7 @@ import whz.pti.farm_controll.dto.TaskDto;
 import whz.pti.farm_controll.enums.TaskStatus;
 import whz.pti.farm_controll.repositories.EquipmentRepository;
 import whz.pti.farm_controll.repositories.LocationRepository;
+import whz.pti.farm_controll.repositories.TaskRepository;
 import whz.pti.farm_controll.repositories.UserRepository;
 import whz.pti.farm_controll.service.TaskService;
 
@@ -23,10 +24,12 @@ public class TaskController {
     private final EquipmentRepository equipmentRepository;
     private final UserRepository userRepository;
     private final LocationRepository locationRepository;
+    private final TaskRepository taskRepository;
 
     @GetMapping
     public String listTasks(Model model) {
         model.addAttribute("tasks", taskService.findAllTask());
+        model.addAttribute("filter", "all");
         return "tasks";
     }
 
@@ -76,6 +79,34 @@ public class TaskController {
     public String deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return "redirect:/tasks";
+    }
+
+    @GetMapping("/geplant")
+    public String listPlannedTasks(Model model) {
+        model.addAttribute("tasks", taskService.findPlannedTasks());
+        model.addAttribute("filter", "geplant");
+        return "tasks";
+    }
+
+    @GetMapping("/in-arbeit")
+    public String listInProgressTasks(Model model) {
+        model.addAttribute("tasks", taskService.findInProgressTasks());
+        model.addAttribute("filter", "in-arbeit");
+        return "tasks";
+    }
+
+    @GetMapping("/abgeschlossen")
+    public String listCompletedTasks(Model model) {
+        model.addAttribute("tasks", taskService.findCompletedTasks());
+        model.addAttribute("filter", "abgeschlossen");
+        return "tasks";
+    }
+
+    @GetMapping("/verschoben")
+    public String listPostponedTasks(Model model) {
+        model.addAttribute("tasks", taskService.findPostponedTasks());
+        model.addAttribute("filter", "verschoben");
+        return "tasks";
     }
 }
 

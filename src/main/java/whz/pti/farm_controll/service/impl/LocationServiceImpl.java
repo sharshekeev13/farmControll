@@ -59,6 +59,7 @@ public class LocationServiceImpl implements LocationService {
         dto.setDescription(location.getDescription());
         dto.setAddress(location.getAddress());
         dto.setCoordinates(location.getCoordinates());
+        dto.setEquipmentCount((long) location.getEquipments().size());
 
         if (location.getEquipments() != null && !location.getEquipments().isEmpty()) {
             List<Long> equipmentIds = location.getEquipments().stream()

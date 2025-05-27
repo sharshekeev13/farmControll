@@ -70,6 +70,28 @@ body {
     padding: 10px;
 }
 
+.tasks-filters {
+    margin-left: -133px;
+    margin-right: auto;
+    align-self: flex-end;
+}
+
+.filter-select {
+    padding: 6px 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+
+.filter-select:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
 .btn-edit {
     background-color: #f39d4b;
     color: white;

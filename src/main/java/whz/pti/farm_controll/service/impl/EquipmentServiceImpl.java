@@ -141,11 +141,47 @@ public class EquipmentServiceImpl implements EquipmentService {
         }
         equipmentRepository.deleteById(id);
     }
+
     @Override
     public EquipmentDto getEquipmentById(Long id) {
         Equipment equipment = equipmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Оборудование с id " + id + " не найдено"));
         return mapToDto(equipment);
+    }
+
+    @Override
+    public List<EquipmentDto> findBetriebsbereitEquipment() {
+        return equipmentRepository.findBetriebsbereitEquipment().stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EquipmentDto> findFunktionEquipment() {
+        return equipmentRepository.findFunktionEquipment().stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EquipmentDto> findInWartungEquipment() {
+        return equipmentRepository.findInWartungEquipment().stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EquipmentDto> findAusserBetriebsbereitEquipment() {
+        return equipmentRepository.findAusserBetriebsbereitEquipment().stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EquipmentDto> findStilllegTEquipment() {
+        return equipmentRepository.findStilllegTEquipment().stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
     }
 
 

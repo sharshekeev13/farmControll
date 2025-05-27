@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>Ersatzteilliste</title>
@@ -14,7 +15,9 @@
   <div class="spar-content-container">
     <div class="spar-header">
       <h2>Ersatzteile</h2>
-      <a th:href="@{/spare-parts/new}">+ Neues Ersatzteil</a>
+        <span sec:authorize="hasAnyAuthority('ADMIN','MANAGER')">
+          <a th:href="@{/spare-parts/new}">+ Neues Ersatzteil</a>
+        </span>
     </div>
 
     <table  class="spar-table">
@@ -24,7 +27,7 @@
         <th>Name</th>
         <th>Menge</th>
         <th>Verwendet in Geräten</th>
-        <th>Aktionen</th>
+        <th sec:authorize="hasAnyAuthority('ADMIN','MANAGER')">Aktionen</th>
       </tr>
       </thead>
       <tbody>
@@ -38,10 +41,12 @@
           </ul>
         </td>
         <td>
-          <a class="btn-edit" th:href="@{'/spare-parts/update/' + ${sp.id}}" >Bearbeiten</a>
-          <a class="btn-delete" th:href="@{'/spare-parts/delete/' + ${sp.id}}"
-             onclick="return confirm('Möchten Sie dieses Ersatzteil wirklich löschen?')"
-             >Löschen</a>
+          <span sec:authorize="hasAnyAuthority('ADMIN','MANAGER')">
+            <a class="btn-edit" th:href="@{'/spare-parts/update/' + ${sp.id}}" >Bearbeiten</a>
+            <a class="btn-delete" th:href="@{'/spare-parts/delete/' + ${sp.id}}"
+               onclick="return confirm('Möchten Sie dieses Ersatzteil wirklich löschen?')"
+               >Löschen</a>
+          </span>
         </td>
       </tr>
       </tbody>

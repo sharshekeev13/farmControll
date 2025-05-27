@@ -10,4 +10,8 @@ public interface TaskService {
     List<TaskDto> findAllTask();
     void deleteTask(Long id);
     List<TaskDto> findAllTaskByEmail(String email);
+    List<TaskDto> findPlannedTasks();
+    List<TaskDto> findInProgressTasks();
+    List<TaskDto> findCompletedTasks();
+    List<TaskDto> findPostponedTasks();
 }
