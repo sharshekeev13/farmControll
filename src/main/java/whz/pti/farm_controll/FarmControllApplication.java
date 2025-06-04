@@ -11,7 +11,4 @@ public class FarmControllApplication {
         var encoder = new BCryptPasswordEncoder();
         SpringApplication.run(FarmControllApplication.class, args);
     }
-
-
-
 }
